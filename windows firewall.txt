@@ -1,0 +1,18 @@
+
+windows firewall, да и касперский тоже, мешают докеру получить доступ к локальным дискам.
+
+описание решения тут:
+
+https://docs.docker.com/docker-for-windows/#firewall-rules-for-shared-drives
+
+FIREWALL RULES FOR SHARED DRIVES
+
+Shared drives require port 445 to be open between the host machine and the virtual machine that runs Linux containers.
+
+Note: Docker detects if port 445 is closed and shows the following message when you try to add a shared drive: Port 445
+blocked
+To share the drive, allow connections between the Windows host machine and the virtual machine in Windows Firewall or your third party firewall software. You do not need to open port 445 on any other network. By default, allow connections to 10.0.75.1 port 445 (the Windows host) from 10.0.75.2 (the virtual machine). If the firewall rules appear to be open, consider reinstalling the File and Print Sharing service on the virtual network adapter.
+
+Однако у меня не взлетело, когда я создать 2 правила в windows firewall, для входящих и исходящих подключений на порт 445 (без указания ip).
+Видимо, надо еще настраивать касперского, но времени пока нет.
+Отключил оба файрвола, докер получил доступ к дискам.

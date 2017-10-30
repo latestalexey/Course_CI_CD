@@ -1,0 +1,48 @@
+Block 3
+
+Jenkins
+
+first administrator
+
+login admin
+pass  95af8e990ff74ea98e674f2ca75e3a72
+
+address localhost:8080
+
+user
+login nicxxx
+pass 1Mb
+
+Настройки.
+
+email sending settings
+
+server smtp 	smtp.gmail.com
+user 			d1823244
+pass 			pass
+use SSL 		true
+SMTP port 		465
+charset 		UTF-8
+
+Запуск агента
+
+когда мы открываем агента Windows-1, то на его странице команда запуска выглядит так
+java -jar agent.jar -jnlpUrl http://localhost:8080/computer/windows-1/slave-agent.jnlp -secret e2940f7b8cbdee5a0eea58f09f94e48f5cad5c23c1635c38cd346d9f25073a0b -workDir "e:\workspace\jenkins_slave\"
+
+однако java ругается при ее запуске
+
+Exception in thread "main" java.nio.file.InvalidPathException: Illegal char <"> at index 26: e:\workspace\jenkins_slave"\remoting
+        at sun.nio.fs.WindowsPathParser.normalize(Unknown Source)
+        at sun.nio.fs.WindowsPathParser.parse(Unknown Source)
+        at sun.nio.fs.WindowsPathParser.parse(Unknown Source)
+        at sun.nio.fs.WindowsPath.parse(Unknown Source)
+        at sun.nio.fs.WindowsFileSystem.getPath(Unknown Source)
+        at java.io.File.toPath(Unknown Source)
+        at org.jenkinsci.remoting.engine.WorkDirManager.initializeWorkDir(WorkDirManager.java:194)
+        at hudson.remoting.Launcher.run(Launcher.java:294)
+        at hudson.remoting.Launcher.main(Launcher.java:277)
+		
+на одинарные кавычки тоже ругается.
+Поэтому запускаем команду без этого параметра "-workDir "e:\workspace\jenkins_slave\""
+Тогда все проходит успешно.
+Кстати, скрипт агента успешно запускается из без административной консоли.

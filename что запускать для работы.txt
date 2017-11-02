@@ -4,7 +4,9 @@ postgres windows
 
 gitlab
 
-	зайти в каталог e:\workspace\gitlab\ и через cmd выполнить docker-compose up -d
+	зайти в каталог e:\workspace\gitlab\ и через cmd выполнить 
+		
+		docker-compose up -d
 
 jenkins
 

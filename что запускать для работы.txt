@@ -1,0 +1,17 @@
+postgres windows
+	
+	стартует автоматом как сервис
+
+gitlab
+
+	зайти в каталог e:\workspace\gitlab\ и через cmd выполнить docker-compose up -d
+
+jenkins
+
+	главная нода
+	e:\workspace\jenkins\start.cmd
+
+	slave node
+	e:\workspace\jenkins_slave\start.cmd
+	(останется окно cmd)
+	

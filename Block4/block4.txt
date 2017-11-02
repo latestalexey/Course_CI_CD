@@ -1,0 +1,3 @@
+Хранилище storage_trade
+login Администратор
+pass без пароля

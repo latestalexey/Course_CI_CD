@@ -1,0 +1,14 @@
+localhost:10080
+
+admin
+
+login: root
+password: password
+
+user
+
+login: nikolai
+password: password
+mail: nicxx@yandex.ru
+
+параметры базы - в файле yml

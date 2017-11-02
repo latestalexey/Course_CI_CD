@@ -2,6 +2,12 @@ Block 3
 
 Jenkins
 
+ЗАПУСК: e:\workspace\jenkins\start.cmd
+
+файлы run.cmd run.sh одинаковые. их запускать не надо. они пересоздадут контейнер и настройки сотрутся (проверить)
+
+ЗАПУСК slave: e:\workspace\jenkins_slave\start.cmd
+
 first administrator
 
 login admin
@@ -46,3 +52,15 @@ Exception in thread "main" java.nio.file.InvalidPathException: Illegal char <"> 
 Поэтому запускаем команду без этого параметра "-workDir "e:\workspace\jenkins_slave\""
 Тогда все проходит успешно.
 Кстати, скрипт агента успешно запускается из без административной консоли.
+
+Как сделать бэкап настроек.
+
+ловить бэкап надо здесь e:\workspace\volumes\jenkins\backup\
+
+заходим в меню http://localhost:8080/manage
+находим на странице ссылку на ThinBackup (это плагин, мы его установили ранее)
+или сразу идем сюда http://localhost:8080/thinBackup/
+Жмем ссылку на Backup Now
+Результат - новый каталог бэкапа e:\workspace\volumes\jenkins\backup\FULL-2017-11-02_06-11\
+
+

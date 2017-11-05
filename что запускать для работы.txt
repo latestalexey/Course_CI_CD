@@ -1,19 +1,24 @@
-postgres windows
-	
-	стартует автоматом как сервис
+п»їpostgres windows (РѕР±С‹С‡РЅР°СЏ РІРµСЂСЃРёСЏ, Р±РµР· РїР°С‚С‡РµР№ РґР»СЏ 1РЎ)
+	СЃС‚Р°СЂС‚СѓРµС‚ Р°РІС‚РѕРјР°С‚РѕРј РєР°Рє СЃРµСЂРІРёСЃ
+port:5432
+
+postgres 1C (9.6.5)
+	СЃС‚Р°СЂС‚СѓРµС‚ Р°РІС‚РѕРјР°С‚РѕРј РєР°Рє СЃРµСЂРІРёСЃ
+port:5434
+
 
 gitlab
 
-	зайти в каталог e:\workspace\gitlab\ и через cmd выполнить 
+	Р·Р°Р№С‚Рё РІ РєР°С‚Р°Р»РѕРі e:\workspace\gitlab\ Рё С‡РµСЂРµР· cmd РІС‹РїРѕР»РЅРёС‚СЊ 
 		
 		docker-compose up -d
 
 jenkins
 
-	главная нода
+	РіР»Р°РІРЅР°СЏ РЅРѕРґР°
 	e:\workspace\jenkins\start.cmd
 
 	slave node
 	e:\workspace\jenkins_slave\start.cmd
-	(останется окно cmd)
+	(РѕСЃС‚Р°РЅРµС‚СЃСЏ РѕРєРЅРѕ cmd)
 	

@@ -7,13 +7,13 @@ postgres 1C (9.6.5)
 port:5434
 
 
-gitlab
+gitlab. ищем его по адресу localhost:10080
 
 	зайти в каталог e:\workspace\gitlab\ и через cmd выполнить 
 		
 		docker-compose up -d
 
-jenkins
+jenkins. ищем его по адресу localhost:8080
 
 	главная нода
 	e:\workspace\jenkins\start.cmd

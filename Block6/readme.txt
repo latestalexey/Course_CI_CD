@@ -1,7 +1,7 @@
 ﻿каталог с фичей берем из блока 4
 
 установили vanessa-runner:
-opm install runner
+opm install vanessa-runner
 
 написали файл настроек для runner - tools\VBParams.json
 

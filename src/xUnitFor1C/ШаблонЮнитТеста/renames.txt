@@ -1,0 +1,7 @@
+﻿04e22986-c4dc-4556-baf2-57d27e27a8c6-->und\04e22986-c4dc-4556-baf2-57d27e27a8c6
+50175b89-f91c-4516-a824-5670ebd59a88.0\info-->und\50175b89-f91c-4516-a824-5670ebd59a88.0\info
+50175b89-f91c-4516-a824-5670ebd59a88.0\text-->ObjectModule.bsl
+copyinfo-->und\copyinfo
+root-->und\root
+version-->und\version
+versions-->und\versions

@@ -1,0 +1,15 @@
+{
+    "ВыполнитьСценарии": true,
+    "ЗавершитьРаботуСистемы": true,
+    "ЗакрытьTestClentПослеЗапускаСценариев": true,
+    "КаталогФич": "$workspaceRoot/features",
+    "КаталогиБиблиотек": [
+        "./features/Libraries"
+    ],
+    "ДелатьОтчетВФорматеАллюр": true,
+    "КаталогOutputAllureБазовый": "$workspaceRoot/out/allure",
+    "ВыгружатьСтатусВыполненияСценариевВФайл": true,
+    "ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев": "$workspaceRoot/out/buildStatus.log",
+    "ДелатьОтчетВФорматеCucumberJson": true,
+    "КаталогOutputCucumberJson": "$workspaceRoot/out/cucumber"
+}

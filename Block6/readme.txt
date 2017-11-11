@@ -68,3 +68,5 @@ cucumber fileIncludePattern: '**/*.json', sortingMethod: 'ALPHABETICAL'
 
 идем на 
 https://github.com/picklesdoc/pickles
+
+Еще нужно установить плагин Cucumber Living Documentation

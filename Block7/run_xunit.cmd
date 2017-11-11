@@ -1,0 +1,2 @@
+chcp 65001
+vrunner xunit e:\workspace\git\trade\tools\xUnitFor1C\Tests\Smoke\ --pathxunit e:\workspace\git\trade\tools\xUnitFor1C\xddTestRunner.epf --reportsxunit "ГенераторОтчетаJUnitXML{out/junit.xml}" --xddExitCodePath ./out/junitstatus.log --ibconnection "/Slocalhost:2541\trade_test" --xddConfig ./tools/xunitparams.json

@@ -1,0 +1,4 @@
+4. ¬оспользоватьс€ параметром DisableUnsafeActionProtection файла conf.cfg. ¬ этом случае механизм защиты от опасных действий будет отключатьс€ дл€ всех пользователей информационных баз, строки соединени€ которых удовлетвор€ют указанным маскам. 
+ѕримеры
+DisableUnsafeActionProtection=test_.*;stage_.*;
+DisableUnsafeActionProtection=.*

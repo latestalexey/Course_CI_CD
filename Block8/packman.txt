@@ -1,0 +1,29 @@
+сборка дистрибутива
+
+установили пакман
+opm install packman
+
+сделали файл package.edf
+Поставщик infostart19400
+Версия 1.0.1.1
+Префикс дистрибутива trade19400
+
+добавили в jenkinsfile новый stage
+
+  stage ('Подготовка дистрибутива') {
+            steps {
+                timestamps {
+                    cmd ("packman load-storage \"${env.StoragePath}\" -use-tool1cd -storage-v ${versionValue}")
+                    cmd ("packman make-cf")
+                    cmd ("packman make-dist ./tools/package.edf -setup")
+                    cmd ("packman zip-dist -out out -name-prefix trade19400")
+
+                    archiveArtifacts artifacts: 'out/trade19400*.zip', onlyIfSuccessful: true
+                }
+            }
+        }        
+
+		
+Полученный дистрибутив можно задеплоить в пустой каталог, пример в файле
+deploy_distr.os
+Но сначала дистрибутив нужно установить

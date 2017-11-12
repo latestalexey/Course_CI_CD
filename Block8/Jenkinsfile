@@ -1,0 +1,131 @@
+﻿connectionString = "" /*define it without def to make it global. https://stackoverflow.com/questions/45514585/exception-while-executing-groovy-script-from-jenkinsfile-groovy-lang-missingprop*/
+def uccode
+def lockParams
+
+def versionText
+def versionValue
+
+pipeline {
+    agent {
+        label 'bdd'
+    }
+    environment {
+        Storage = credentials('Storage_Trade_CiBot')
+        /* логин и пароль разделенные двоеточием:*/
+        /* Storage - login:pass*/
+        /* Storage_Usr - логин*/
+        /* Storage_Psw - пароль*/
+    }
+    
+    stages {
+        stage ('Обновление тестового контура'){
+            steps {
+                timestamps {
+                    script {
+                        connectionString = "\"/S${env.Server1C}\\${env.Database1C}\""
+                        uccode = "\"123\""
+                        lockParams = "-lockmessage \"base is blocked\" -lockuccode ${uccode}"
+
+                        versionText = readFile encoding: 'UTF-8', file: 'src/cf/VERSION'
+                        versionValue = (versionText =~ /<VERSION>(.*)<\/VERSION>/)[0][1]
+                    }
+                    
+                    cmd("oscript --version") 
+                    cmd("deployka session lock -ras ${env.ServerRAS} -db ${env.Database1C} ${lockParams}")
+                    cmd("deployka session kill -ras ${env.ServerRAS} -db ${env.Database1C} ${lockParams}")
+                    cmd("deployka loadrepo ${connectionString} \"${env.StoragePath}\" -storage-user ${env.Storage_Usr} -storage-pwd ${env.Storage_Psw} -uccode \"123\" -storage-ver ${versionValue}")
+                    cmd("deployka dbupdate ${connectionString} -allow-warnings -uccode \"123\"")
+                    cmd("deployka session unlock -ras ${env.ServerRAS} -db ${env.Database1C}")
+                }
+            }
+        }
+        stage ('Проверка поведения'){
+            steps {
+                timestamps {
+                    cmd("vrunner vanessa --pathvanessa ./tools/vanessa-behavior/vanessa-behavior.epf --vanessasettings ./tools/VBParams.json --workspace . --ibconnection ${connectionString}")
+                }
+            }
+        }
+        stage ('Дымовое тестирование') {
+            steps {
+                timestamps {
+                    cmd("vrunner xunit ./tools/xUnitFor1C/Tests/Smoke --pathxunit ./tools/xUnitFor1C/xddTestRunner.epf --reportsxunit \"ГенераторОтчетаJUnitXML{out/junit.xml}\" --xddExitCodePath ./out/junitstatus.log --ibconnection ${connectionString} --xddConfig ./tools/xunitparams.json")
+                }
+            }
+        }
+        stage ('Юнит-тестирование') {
+            steps {
+                timestamps {
+                    cmd("vrunner xunit ./unitTests/1823244 --pathxunit ./tools/xUnitFor1C/xddTestRunner.epf --reportsxunit \"ГенераторОтчетаJUnitXML{out/unittest.xml}\" --xddExitCodePath ./out/unitteststatus.log --ibconnection ${connectionString}")
+                }
+            }
+        }        
+        stage ('Публикация результатов'){
+            steps {
+                script {
+                    def allurePath = tool name: 'allure', type: 'allure'
+                    cmd("${allurePath}/bin/allure generate -o out/publishHTML/allure-report out/allure")
+                }
+
+                junit allowEmptyResults: true, testResults: 'out/junit.xml, out/unittest.xml'
+
+                cmd("pickles -f features -o out/publishHTML/pickles -l ru --df dhtml --sn \"Trade\"")
+
+                publishHTML target: [
+                    allowMissing: false, 
+                    alwaysLinkToLastBuild: false, 
+                    keepAll: false, 
+                    reportDir: 'out/publishHTML', 
+                    reportFiles: 'allure-report/index.html,pickles/Index.html', 
+                    reportName: 'HTML Report', 
+                    reportTitles: 'Отчеты Allure and Pickles'
+                ]
+                step([
+                    $class: 'CucumberReportPublisher',
+                    fileIncludePattern: '*.json',
+                    jsonReportDirectory: 'out/cucumber'
+                ])
+
+                step([
+                    $class: 'CukedoctorPublisher',
+                    featuresDir: 'out/cucumber',
+                    formt: 'HTML',
+                    hideFeaturesSection: false,
+                    hideScenarioKeyword: false,
+                    hideStepTime: false,
+                    hideSummary: false,
+                    hideTags: false,
+                    numbered: true,
+                    sectAnchors: true,
+                    title: 'Living Docs',
+                    toc: 'LEFT'
+
+                ])
+
+            }
+
+
+        }
+
+        stage ('Подготовка дистрибутива') {
+            steps {
+                timestamps {
+                    cmd ("packman load-storage \"${env.StoragePath}\" -use-tool1cd -storage-v ${versionValue}")
+                    cmd ("packman make-cf")
+                    cmd ("packman make-dist ./tools/package.edf -setup")
+                    cmd ("packman zip-dist -out out -name-prefix trade19400")
+
+                    archiveArtifacts artifacts: 'out/trade19400*.zip', onlyIfSuccessful: true
+                }
+            }
+        }        
+
+    }
+}
+def cmd(command) {
+    if (isUnix()) {
+        sh "${command}"
+    } else {
+        bat "chcp 65001\n${command}"
+    }
+} 

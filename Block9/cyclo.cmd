@@ -1,0 +1,1 @@
+oscript ./tools/cyclo.os src out/cyclo.txt

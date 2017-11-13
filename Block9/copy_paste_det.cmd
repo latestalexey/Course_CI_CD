@@ -1,0 +1,1 @@
+cpd -d src -i *.bsl -r pmd -f cpd.xml

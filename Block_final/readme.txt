@@ -1,0 +1,1 @@
+https://vt-tech.eu/articles/programming/265-gitlab-jenkins-v2.html
